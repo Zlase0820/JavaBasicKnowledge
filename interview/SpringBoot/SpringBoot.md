@@ -462,6 +462,11 @@ thymeleaf还有一个功能，它将所有的/templates文件下的html文件都
 ### @RestController
 
 - @RequestMapping
+  - [说明文档](https://www.cnblogs.com/caoyc/p/5635173.html)
+  - 用于定义请求URL的地址和访问类型，可以放在类上，也可以放在具体的接口method上
+    - value参数：传入url的地址
+    - method参数：传入的类型
+  - 注意：这个参数在类上还有使用，但是在method上一般用下边几个注解代替了
 - @GetMapping
 - @PostMapping
 - @DeleteMapping
@@ -473,6 +478,7 @@ package com.springboot.learn.springbootlearn.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(value="abc")
 public class HelloController {
 
     @RequestMapping("/bug.jpg")
@@ -511,16 +517,55 @@ public class HelloController {
 
 
 
+### @Repository
+
+​		一般放在一个Class上，调用这个类的构造函数，放一个组件到容器中。
+
+​		四个常用注解的差别：@Repository，@Service，@Controller，@Component
+
+​		[四个注解差别传送门](https://blog.csdn.net/u011305680/article/details/51701371)
+
+```
+	查了一些网上的其他博客，发现几个注解本质上没有什么区别，至少在spring2.5版本里，这几个注解本质是一样的（当然，新的版本有什么变化目前还没细查），命名不一样主要是为了区分类的作用和所属层级：
+	@Repository：持久层，用于标注数据访问组件，即DAO组件。
+	@Service：业务层，用于标注业务逻辑层主键。
+	@Controller：控制层，用于标注控制层组件。
+	@Component：当你不确定是属于哪一层的时候使用。
+```
+
+
+
+
+
+### @Service
+
+​		一般放在一个Class上，调用这个类的构造函数，放一个组件到容器中。	
+
+
+
 ### @Component
 
-	一般放在一个Class上，将Class注入到容器中
-	这个Class会被初始化，然后注入到容器中
+​		一般放在一个Class上，调用这个类的构造函数，放一个组件到容器中
+
+
+
+
+
+
+
+
+
+### @Bean
+
+​		主要用于Spring的组件注入，通常放在方法名称上，调用这个方法后，会将return值放在容器中。
+
+
 
 
 
 ### @Configuration
 
-@Configuration注解通常用来自动做配置的类
+@Configuration注解通常用来自动做配置的类。会调用这个类的构造函数，放一个组件到容器中
 
 - 轻量配置，全量配置   @Configuration(proxyBeanMethods = true)
 
@@ -729,6 +774,16 @@ public class MyConfig1 {
 
 
 
+### @PathVariable
+
+​		该注解可以获取传入参数的路径中的变量
+
+​		如果在传递的参数中增加一个@PathVariable放一个空Map，会自动将其他的@PathVariable的参数放置在Map中
+
+​		具体使用方法见@MatrixVariable 矩阵变量 注解
+
+
+
 ### @MatrixVariable 矩阵变量 注解
 
 矩阵变量通常用来传递多个参数，用来做多个选择
@@ -797,6 +852,14 @@ http://localhost:8888/cars/sell;low=34;brand=byd,audi,yd
 ```
 {"path":"sell","low":34,"brand":["byd","audi","yd"]}
 ```
+
+
+
+
+
+### @Mapper
+
+​		主要用于Mybatis读取数据库中，在interface中添加注解，后续再.xml中写好SQL，并进行返还。
 
 
 
